@@ -66,3 +66,51 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.VC.db
+*.VC.VC.opendb
+ipch/
+Debug/
+Release/
+x64/
+x86/
+Win32/
+
+# JetBrains IDEs (CLion / IntelliJ IDEA)
+.idea/
+*.iml
+
+# Generated test results and coverage data
+TestResults/
+test-results/
+coverage/
+*.gcda
+*.gcno
+*.gcov
+*.profraw
+*.profdata
+*.coverage
+*.coveragexml
+
+# Documentation files (keep Markdown and license files tracked)
+*.pdf
+*.doc
+*.docx
+*.ppt
+*.pptx
+*.xls
+*.xlsx
+*.odt
+*.ods
+*.odp
+*.rtf
