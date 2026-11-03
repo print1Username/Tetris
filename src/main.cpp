@@ -2,7 +2,7 @@
 #include "../include/Renderer.h"
 
 int main() {
-	sf::RenderWindow window(sf::VideoMode({ Renderer::WindowWidth, Renderer::WindowHeight }), "Tetris");
+	sf::RenderWindow window(sf::VideoMode({ Renderer::windowWidth, Renderer::windowHeight }), "Tetris");
 	window.setFramerateLimit(60);
 
 	Piece pieces;

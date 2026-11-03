@@ -1,84 +1,84 @@
 #include "../include/Game.h"
 
 Game::Game(Board & board, const Piece & pieces)
-	: board_(board), pieces_(pieces), random_(std::random_device{}()) {
-	currentType_ = RandomType();
-	currentRotation_ = RandomRotation();
-	nextType_ = RandomType();
-	nextRotation_ = RandomRotation();
-	x_ = Board::Width / 2 + pieces_.GetXInitialPosition(currentType_, currentRotation_);
-	y_ = pieces_.GetYInitialPosition(currentType_, currentRotation_);
-	gameOver_ = !board_.IsPossibleMovement(x_, y_, currentType_, currentRotation_);
+	: _board(board), _pieces(pieces), _random(std::random_device{}()) {
+	_currentType = RandomType();
+	_currentRotation = RandomRotation();
+	_nextType = RandomType();
+	_nextRotation = RandomRotation();
+	_x = Board::width / 2 + _pieces.GetXInitialPosition(_currentType, _currentRotation);
+	_y = _pieces.GetYInitialPosition(_currentType, _currentRotation);
+	_gameOver = !_board.IsPossibleMovement(_x, _y, _currentType, _currentRotation);
 }
 
 Piece::Type Game::RandomType() {
 	std::uniform_int_distribution<int> distribution(Piece::O, Piece::T);
-	return static_cast<Piece::Type>(distribution(random_));
+	return static_cast<Piece::Type>(distribution(_random));
 }
 
 int Game::RandomRotation() {
 	std::uniform_int_distribution<int> distribution(0, 3);
-	return distribution(random_);
+	return distribution(_random);
 }
 
 void Game::CreateNewPiece() {
-	currentType_ = nextType_;
-	currentRotation_ = nextRotation_;
-	x_ = Board::Width / 2 + pieces_.GetXInitialPosition(currentType_, currentRotation_);
-	y_ = pieces_.GetYInitialPosition(currentType_, currentRotation_);
-	nextType_ = RandomType();
-	nextRotation_ = RandomRotation();
-	gameOver_ = !board_.IsPossibleMovement(x_, y_, currentType_, currentRotation_);
+	_currentType = _nextType;
+	_currentRotation = _nextRotation;
+	_x = Board::width / 2 + _pieces.GetXInitialPosition(_currentType, _currentRotation);
+	_y = _pieces.GetYInitialPosition(_currentType, _currentRotation);
+	_nextType = RandomType();
+	_nextRotation = RandomRotation();
+	_gameOver = !_board.IsPossibleMovement(_x, _y, _currentType, _currentRotation);
 }
 
 void Game::MoveLeft() {
-	if ( !gameOver_ && board_.IsPossibleMovement(x_ - 1, y_, currentType_, currentRotation_) )
-		--x_;
+	if ( !_gameOver && _board.IsPossibleMovement(_x - 1, _y, _currentType, _currentRotation) )
+		--_x;
 }
 
 void Game::MoveRight() {
-	if ( !gameOver_ && board_.IsPossibleMovement(x_ + 1, y_, currentType_, currentRotation_) )
-		++x_;
+	if ( !_gameOver && _board.IsPossibleMovement(_x + 1, _y, _currentType, _currentRotation) )
+		++_x;
 }
 
 void Game::MoveDown() {
-	if ( !gameOver_ && board_.IsPossibleMovement(x_, y_ + 1, currentType_, currentRotation_) )
-		++y_;
+	if ( !_gameOver && _board.IsPossibleMovement(_x, _y + 1, _currentType, _currentRotation) )
+		++_y;
 }
 
 void Game::Rotate() {
-	const int nextRotation = (currentRotation_ + 1) % 4;
-	if ( !gameOver_ && board_.IsPossibleMovement(x_, y_, currentType_, nextRotation) )
-		currentRotation_ = nextRotation;
+	const int nextRotation = (_currentRotation + 1) % 4;
+	if ( !_gameOver && _board.IsPossibleMovement(_x, _y, _currentType, nextRotation) )
+		_currentRotation = nextRotation;
 }
 
 void Game::LockCurrentPiece() {
-	board_.StorePiece(x_, y_, currentType_, currentRotation_);
-	board_.DeletePossibleLines();
-	gameOver_ = board_.IsGameOver();
-	if ( !gameOver_ )
+	_board.StorePiece(_x, _y, _currentType, _currentRotation);
+	_board.DeletePossibleLines();
+	_gameOver = _board.IsGameOver();
+	if ( !_gameOver )
 		CreateNewPiece();
 }
 
 void Game::HardDrop() {
-	if ( gameOver_ )
+	if ( _gameOver )
 		return;
 
-	while ( board_.IsPossibleMovement(x_, y_ + 1, currentType_, currentRotation_) )
-		++y_;
+	while ( _board.IsPossibleMovement(_x, _y + 1, _currentType, _currentRotation) )
+		++_y;
 	LockCurrentPiece();
-	fallElapsedMs_ = 0;
+	_fallElapsedMs = 0;
 }
 
 void Game::Update(int elapsedMilliseconds) {
-	if ( gameOver_ || elapsedMilliseconds <= 0 )
+	if ( _gameOver || elapsedMilliseconds <= 0 )
 		return;
 
-	fallElapsedMs_ += elapsedMilliseconds;
-	while ( fallElapsedMs_ >= FallIntervalMs && !gameOver_ ) {
-		fallElapsedMs_ -= FallIntervalMs;
-		if ( board_.IsPossibleMovement(x_, y_ + 1, currentType_, currentRotation_) )
-			++y_;
+	_fallElapsedMs += elapsedMilliseconds;
+	while ( _fallElapsedMs >= fallIntervalMs && !_gameOver ) {
+		_fallElapsedMs -= fallIntervalMs;
+		if ( _board.IsPossibleMovement(_x, _y + 1, _currentType, _currentRotation) )
+			++_y;
 		else
 			LockCurrentPiece();
 	}

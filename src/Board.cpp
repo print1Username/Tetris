@@ -1,20 +1,20 @@
 #include "../include/Board.h"
 
-Board::Board(const Piece & pieces) : pieces_(pieces) {}
+Board::Board(const Piece & pieces) : _pieces(pieces) {}
 
 bool Board::IsFreeBlock(int x, int y) const {
-	return !blocks_[y][x];
+	return !_blocks[y][x];
 }
 
 bool Board::IsPossibleMovement(int x, int y, Piece::Type type, int rotation) const {
-	for ( int row = 0; row < Piece::Size; ++row ) {
-		for ( int col = 0; col < Piece::Size; ++col ) {
-			if ( pieces_.GetBlockType(type, rotation, row, col) == 0 )
+	for ( int row = 0; row < Piece::size; ++row ) {
+		for ( int col = 0; col < Piece::size; ++col ) {
+			if ( _pieces.GetBlockType(type, rotation, row, col) == 0 )
 				continue;
 
 			const int boardX = x + col;
 			const int boardY = y + row;
-			if ( boardX < 0 || boardX >= Width || boardY >= Height )
+			if ( boardX < 0 || boardX >= width || boardY >= height )
 				return false;
 			if ( boardY >= 0 && !IsFreeBlock(boardX, boardY) )
 				return false;
@@ -24,33 +24,33 @@ bool Board::IsPossibleMovement(int x, int y, Piece::Type type, int rotation) con
 }
 
 void Board::StorePiece(int x, int y, Piece::Type type, int rotation) {
-	for ( int row = 0; row < Piece::Size; ++row ) {
-		for ( int col = 0; col < Piece::Size; ++col ) {
-			if ( pieces_.GetBlockType(type, rotation, row, col) == 0 )
+	for ( int row = 0; row < Piece::size; ++row ) {
+		for ( int col = 0; col < Piece::size; ++col ) {
+			if ( _pieces.GetBlockType(type, rotation, row, col) == 0 )
 				continue;
 
 			if ( y + row < 0 )
-				overflow_ = true;
+				_overflow = true;
 			else
-				blocks_[y + row][x + col] = true;
+				_blocks[y + row][x + col] = true;
 		}
 	}
 }
 
 void Board::DeleteLine(int y) {
 	for ( int row = y; row > 0; --row )
-		for ( int x = 0; x < Width; ++x )
-			blocks_[row][x] = blocks_[row - 1][x];
+		for ( int x = 0; x < width; ++x )
+			_blocks[row][x] = _blocks[row - 1][x];
 
-	for ( int x = 0; x < Width; ++x )
-		blocks_[0][x] = false;
+	for ( int x = 0; x < width; ++x )
+		_blocks[0][x] = false;
 }
 
 void Board::DeletePossibleLines() {
-	for ( int y = 0; y < Height; ++y ) {
+	for ( int y = 0; y < height; ++y ) {
 		bool full = true;
-		for ( int x = 0; x < Width; ++x )
-			full = full && blocks_[y][x];
+		for ( int x = 0; x < width; ++x )
+			full = full && _blocks[y][x];
 
 		if ( full )
 			DeleteLine(y);
@@ -58,11 +58,11 @@ void Board::DeletePossibleLines() {
 }
 
 bool Board::IsGameOver() const {
-	if ( overflow_ )
+	if ( _overflow )
 		return true;
 
-	for ( int x = 0; x < Width; ++x )
-		if ( blocks_[0][x] )
+	for ( int x = 0; x < width; ++x )
+		if ( _blocks[0][x] )
 			return true;
 	return false;
 }

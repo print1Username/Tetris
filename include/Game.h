@@ -6,7 +6,7 @@
 
 class Game {
 public:
-	static constexpr int FallIntervalMs = 700;
+	static constexpr int fallIntervalMs = 700;
 
 	Game(Board & board, const Piece & pieces);
 
@@ -17,26 +17,26 @@ public:
 	void HardDrop();
 	void Update(int elapsedMilliseconds);
 
-	Piece::Type GetCurrentType() const { return currentType_; }
-	int GetCurrentRotation() const { return currentRotation_; }
-	int GetCurrentX() const { return x_; }
-	int GetCurrentY() const { return y_; }
-	Piece::Type GetNextType() const { return nextType_; }
-	int GetNextRotation() const { return nextRotation_; }
-	bool IsGameOver() const { return gameOver_; }
+	Piece::Type GetCurrentType() const { return _currentType; }
+	int GetCurrentRotation() const { return _currentRotation; }
+	int GetCurrentX() const { return _x; }
+	int GetCurrentY() const { return _y; }
+	Piece::Type GetNextType() const { return _nextType; }
+	int GetNextRotation() const { return _nextRotation; }
+	bool IsGameOver() const { return _gameOver; }
 
 private:
-	Board & board_;
-	const Piece & pieces_;
-	std::mt19937 random_;
-	Piece::Type currentType_ = Piece::O;
-	int currentRotation_ = 0;
-	Piece::Type nextType_ = Piece::O;
-	int nextRotation_ = 0;
-	int x_ = 0;
-	int y_ = 0;
-	int fallElapsedMs_ = 0;
-	bool gameOver_ = false;
+	Board & _board;
+	const Piece & _pieces;
+	std::mt19937 _random;
+	Piece::Type _currentType = Piece::O;
+	int _currentRotation = 0;
+	Piece::Type _nextType = Piece::O;
+	int _nextRotation = 0;
+	int _x = 0;
+	int _y = 0;
+	int _fallElapsedMs = 0;
+	bool _gameOver = false;
 
 	Piece::Type RandomType();
 	int RandomRotation();

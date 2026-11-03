@@ -4,8 +4,8 @@
 
 class Board {
 public:
-	static constexpr int Width = 10;
-	static constexpr int Height = 20;
+	static constexpr int width = 10;
+	static constexpr int height = 20;
 
 	explicit Board(const Piece & pieces);
 
@@ -16,9 +16,9 @@ public:
 	bool IsGameOver() const;
 
 private:
-	bool blocks_[Height][Width]{};
-	bool overflow_ = false;
-	const Piece & pieces_;
+	bool _blocks[height][width]{};
+	bool _overflow = false;
+	const Piece & _pieces;
 
 	void DeleteLine(int y);
 };

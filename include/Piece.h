@@ -4,7 +4,7 @@
 class Piece {
 public:
 	enum Type { O, I, L, J, S, Z, T };
-	static constexpr int Size = 5;
+	static constexpr int size = 5;
 
 	// 0: empty, 1: block, 2: rotation pivot.
 	int GetBlockType(Type type, int rotation, int x, int y) const;
