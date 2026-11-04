@@ -1,8 +1,9 @@
 #include "../include/Renderer.h"
+#include "../include/Window.h"
 
 namespace {
-	constexpr int BoardLeft = (Renderer::windowWidth - Board::width * Renderer::blockSize) / 2;
-	constexpr int BoardTop = Renderer::windowHeight - Board::height * Renderer::blockSize;
+	constexpr int BoardLeft = (Window::windowWidth - Board::width * Renderer::blockSize) / 2;
+	constexpr int BoardTop = Window::windowHeight - Board::height * Renderer::blockSize;
 	constexpr int BorderWidth = 6;
 }
 
@@ -24,7 +25,7 @@ void Renderer::DrawPiece(sf::RenderTarget & target, int x, int y, Piece::Type ty
 				continue;
 
 			const int pixelY = y + row * blockSize;
-			if ( pixelY < 0 || pixelY >= static_cast<int>(windowHeight) )
+			if ( pixelY < 0 || pixelY >= static_cast<int>(Window::windowHeight) )
 				continue;
 
 			DrawBlock(target, x + col * blockSize, pixelY,

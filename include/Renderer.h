@@ -7,8 +7,6 @@
 
 class Renderer {
 public:
-	static constexpr unsigned windowWidth = 800;
-	static constexpr unsigned windowHeight = 600;
 	static constexpr int blockSize = 16;
 
 	Renderer(const Board & board, const Game & game, const Piece & pieces);
