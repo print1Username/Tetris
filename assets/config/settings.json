@@ -1,0 +1,15 @@
+{
+  "keyboard": {
+    "close": 36,
+    "down": 74,
+    "hardDrop": 23,
+    "left": 71,
+    "right": 72,
+    "rotate": 25
+  },
+  "window": {
+    "height": 600,
+    "mode": "windowed",
+    "width": 800
+  }
+}

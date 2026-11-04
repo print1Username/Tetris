@@ -14,6 +14,7 @@
 | `include/Game.h`, `src/Game.cpp` | Current/next pieces, movement, rotation, drop timing, and game state. | 当前及下一个方块、移动、旋转、下落计时与游戏状态。 |
 | `include/Renderer.h`, `src/Renderer.cpp` | SFML drawing for the board, active piece, and next-piece preview at 800×600. | 使用 SFML 在 800×600 画面绘制棋盘、当前方块和下一个方块预览。 |
 | `include/Window.h`, `src/Window.cpp` | Owns the 800×600 window, title, frame limit, events, game input, timing, and main loop. Provides `SetIcon` for an image supplied later. | 管理 800×600 窗口、标题、帧率限制、事件、游戏按键、计时及主循环，并提供 `SetIcon` 接口供之后传入图片。 |
+| `include/Setting.h`, `src/Setting.cpp` | Loads window size, windowed mode, and current keyboard bindings from `assets/config/settings.json` using `external/json.hpp`; fills missing or invalid values with current defaults and writes a complete file. Not yet connected to the running window. | 使用 `external/json.hpp` 从 `assets/config/settings.json` 读取窗口大小、窗口化模式及现有键位；缺失或无效值使用当前默认值，并写回完整文件。目前尚未接入运行中的窗口。 |
 | `src/main.cpp` | Creates `Piece`, `Board`, `Game`, `Renderer`, and `Window`, then runs the window. | 创建 `Piece`、`Board`、`Game`、`Renderer` 和 `Window`，然后运行窗口。 |
 | `Tetris.sln`, `Tetris.vcxproj`, `Tetris.vcxproj.filters` | Visual Studio project and source file registration. | Visual Studio 工程及源文件登记。 |
 | `external/` | Bundled SFML distributions. | 随仓库提供的 SFML 文件。 |
